@@ -1,6 +1,4 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
 import App from './App';
 import { ApolloClient, InMemoryCache, ApolloProvider, gql, from, HttpLink } from '@apollo/client';
 import { ErrorLink, onError } from '@apollo/client/link/error'
@@ -20,6 +18,7 @@ const errorLink = onError(({ graphQLErrors, networkError}) =>{
 const link = from([
   errorLink,
   new HttpLink({ uri: 'https://wpe-hiring.tokopedia.net/graphql'})
+  // new HttpLink({ uri: 'https://web-tools.tokopedia.com/postgres/v1/graphql'})
 ])
 
 const client = new ApolloClient({

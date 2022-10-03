@@ -10,7 +10,7 @@ query GetContactList (
 ) {
   contact(
       distinct_on: $distinct_on, 
-      limit: $limit, 
+      limit: 10, 
       offset: $offset, 
       order_by: $order_by, 
       where: $where
@@ -25,3 +25,4 @@ query GetContactList (
   }
 }
 `
+//limit: $limit
