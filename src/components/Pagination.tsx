@@ -1,15 +1,9 @@
-import React from 'react'
 import styled from '@emotion/styled'
 
 interface PageOption {
     postsPerPage: number;
     totalPosts: number;
 }
-
-const PaginationWrapper = styled.div`
-    width: 100vw;
-    justify-content: center;
-`
 
 const ListItems = styled.li`
     list-style: none;
@@ -35,7 +29,7 @@ const Pagination = ({ postsPerPage, totalPosts }: PageOption) => {
     }
 
     return (
-        <PaginationWrapper>
+        <div>
             <ListPagination>
                 {
                     pageNumber.map((number) => (
@@ -47,7 +41,7 @@ const Pagination = ({ postsPerPage, totalPosts }: PageOption) => {
                     ))
                 }
             </ListPagination>
-        </PaginationWrapper>
+        </div>
     )
 }
 
