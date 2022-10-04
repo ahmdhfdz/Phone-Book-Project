@@ -5,7 +5,7 @@ import Pagination from '../components/Pagination'
 import { useMutation, useQuery } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 import { DELETE_CONTACT } from '../GraphQL/RemoveContact'
-import {IoIosArrowBack, IoIosArrowForward} from 'react-icons/io'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { LOAD_CONTACT_LIST } from '../GraphQL/GetContactList'
 
 
@@ -31,24 +31,29 @@ const PAGE_SIZE = 10;
 const ContactListPage = () => {
     const [page, setPage] = useState(0)
     const { error, loading, data } = useQuery(LOAD_CONTACT_LIST, {
-        variables:{
+        variables: {
             limit: PAGE_SIZE,
-            offset: PAGE_SIZE*page
+            offset: PAGE_SIZE * page
         }
     });
-    
+
     const [DeleteContact] = useMutation(DELETE_CONTACT)
 
-    const DeleteContactFromList = (id:number) =>{
+    const DeleteContactFromList = (id: number) => {
         DeleteContact({
             variables: {
-                id:id
-            }, refetchQueries:[
-                {query: LOAD_CONTACT_LIST}
+                id: id
+            }, refetchQueries: [
+                {
+                    query: LOAD_CONTACT_LIST, variables: {
+                        limit: PAGE_SIZE,
+                        offset: PAGE_SIZE * page
+                    }
+                }
             ]
         })
     }
-  
+
     return (
         <div>
             <h2>Favorite</h2>
@@ -75,18 +80,19 @@ const ContactListPage = () => {
                     data &&
                     data.contact.map((items: any) => {
                         return <CardContact key={items.id}
-                                _id={items.id}
-                                first_name={items.first_name}
-                                last_name={items.first_name}
-                                phone={[{ number: '0812381328' }]} />
+                            removeContact={() => DeleteContactFromList(items.id)}
+                            _id={items.id}
+                            first_name={items.first_name}
+                            last_name={items.first_name}
+                            phone={[{ number: '0812381328' }]} />
                     })
                 }
             </ListWrapper>
             <PaginationWrapper>
                 {/* <Pagination postsPerPage={10} totalPosts={100} /> */}
-                <PaginateButton disabled={!page} onClick={() => setPage((prev)=> prev - 1)}><IoIosArrowBack size={20} /></PaginateButton>
-                <div> {page+1}</div>
-                <PaginateButton onClick={() => setPage((prev)=> prev + 1)}><IoIosArrowForward size={20}/></PaginateButton>
+                <PaginateButton disabled={!page} onClick={() => setPage((prev) => prev - 1)}><IoIosArrowBack size={20} /></PaginateButton>
+                <div> {page + 1}</div>
+                <PaginateButton onClick={() => setPage((prev) => prev + 1)}><IoIosArrowForward size={20} /></PaginateButton>
             </PaginationWrapper>
         </div>
     )

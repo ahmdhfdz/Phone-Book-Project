@@ -5,6 +5,7 @@ import { BsFillBookmarkStarFill } from 'react-icons/bs'
 
 type Contacts = {
   _id?: number;
+  removeContact?: () => void;
   first_name: string;
   last_name: string;
   phone: [{ number: string }]
@@ -29,6 +30,7 @@ const ListContent = styled.div`
   border-radius: 5px;
   padding: 10px 0;
   min-height: 100px;
+  max-width: 312px;
   position: relative;
 `
 const ContainerBtn = styled.div`
@@ -52,7 +54,7 @@ const FavBtn = styled.div`
   padding: 10px;
 `
 
-const CardContact: React.FC<Contacts> = ({ _id, first_name, last_name, phone, del, fav}) => {
+const CardContact: React.FC<Contacts> = ({ _id, first_name, last_name, phone, del, fav, removeContact}) => {
   return (
     <ListItem>
       <ListContent>
@@ -68,7 +70,7 @@ const CardContact: React.FC<Contacts> = ({ _id, first_name, last_name, phone, de
             </FavBtn>
           }
           {!fav &&
-            <DeleteBtn onClick={() => console.log("favorite", _id)}>
+            <DeleteBtn onClick={removeContact}>
               <AiFillDelete />
             </DeleteBtn>
           }
