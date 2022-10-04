@@ -61,8 +61,8 @@ function Header() {
       {
         isOpen &&
         <div>
-          <Link onClick={() => navigate('/')}>Contact List</Link>
-          <Link onClick={() => navigate('form-contact')}>Form Contact</Link>
+          <Link onClick={() => navigate('/')}>Contacts</Link>
+          <Link onClick={() => navigate('form-contact')}>Form</Link>
         </div>
       }
     </Container>
