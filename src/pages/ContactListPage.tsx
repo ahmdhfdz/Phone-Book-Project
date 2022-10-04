@@ -1,12 +1,10 @@
 import CardContact from '../components/CardContact'
 import styled from '@emotion/styled'
 import { useState } from 'react'
-import Pagination from '../components/Pagination'
 import { useMutation, useQuery } from '@apollo/client'
-import { useNavigate } from 'react-router-dom'
-import { DELETE_CONTACT } from '../GraphQL/RemoveContact'
+import { DELETE_CONTACT } from '../GraphQL/Mutations/RemoveContact'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
-import { LOAD_CONTACT_LIST } from '../GraphQL/GetContactList'
+import { LOAD_CONTACT_LIST } from '../GraphQL/Queries/GetContactList'
 
 
 const PaginationWrapper = styled.div`
@@ -83,13 +81,12 @@ const ContactListPage = () => {
                             removeContact={() => DeleteContactFromList(items.id)}
                             _id={items.id}
                             first_name={items.first_name}
-                            last_name={items.first_name}
-                            phone={[{ number: '0812381328' }]} />
+                            last_name={items.last_name}
+                            phone={items.phones} />
                     })
                 }
             </ListWrapper>
             <PaginationWrapper>
-                {/* <Pagination postsPerPage={10} totalPosts={100} /> */}
                 <PaginateButton disabled={!page} onClick={() => setPage((prev) => prev - 1)}><IoIosArrowBack size={20} /></PaginateButton>
                 <div> {page + 1}</div>
                 <PaginateButton onClick={() => setPage((prev) => prev + 1)}><IoIosArrowForward size={20} /></PaginateButton>

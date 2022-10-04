@@ -25,20 +25,3 @@ query GetContactList (
   }
 }
 `
-//limit: $limit
-//offset: $offset
-
-// export const useContactList = (limit:number, offset:number) => {
-//   const {error, data, loading} = useQuery(LOAD_CONTACT_LIST, {
-//       variables: {
-//           limit,
-//           offset,
-//       }
-//   })
-  
-//   return {
-//       error,
-//       data,
-//       loading
-//   }
-// }
