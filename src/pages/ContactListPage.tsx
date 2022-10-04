@@ -1,4 +1,4 @@
-import Card from '../components/Card'
+import CardContact from '../components/CardContact'
 import ContactList from '../components/ContactList'
 import styled from '@emotion/styled'
 import Pagination from '../components/Pagination';
@@ -13,7 +13,7 @@ const ContactListPage = () => {
     return (
         <div>
             <h2>Favorite</h2>
-            <Card />
+            <CardContact />
             <h2>Contact List</h2>
             <ContactList />
             <PaginationWrapper>

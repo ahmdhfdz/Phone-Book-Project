@@ -25,7 +25,7 @@ const ListContent = styled.div`
   padding: 10px 0;
 `
 
-const Card = () => {
+const CardContact = () => {
   return (
     <ListWrapper>
         <ListItem>
@@ -43,4 +43,4 @@ const Card = () => {
   )
 }
 
-export default Card;
+export default CardContact;
