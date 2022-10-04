@@ -15,11 +15,15 @@ type Contacts = {
 
 const ListItem = styled.li`
   list-style-type: none;
-  flex: 0 0 50%;
+  flex: 0 0 20%;
   text-align: center;
 
-  @media (min-width: 420px){
-    flex: 0 0 20%;
+  @media (max-width: 1100px){
+    flex: 0 0 30%;
+  }
+
+  @media (max-width: 620px){
+    flex: 0 0 50%;
   }
 `
 
