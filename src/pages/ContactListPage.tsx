@@ -5,11 +5,12 @@ import { useMutation, useQuery } from '@apollo/client'
 import { DELETE_CONTACT } from '../GraphQL/Mutations/RemoveContact'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { LOAD_CONTACT_LIST } from '../GraphQL/Queries/GetContactList'
+import { SearchFilter } from '../helper/SearchFilter'
 
 
 const PaginationWrapper = styled.div`
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 `;
 
 const ListWrapper = styled.ul`
@@ -19,15 +20,21 @@ const ListWrapper = styled.ul`
 `;
 
 const PaginateButton = styled.button`
-  border-style: none;
-  background: none;
-  cursor: pointer;
+    border-style: none;
+    background: none;
+    cursor: pointer;
+`
+
+const InputContainer = styled.div`
+    display: flex;
+    justify-content: center;
 `
 
 const PAGE_SIZE = 10;
 
 const ContactListPage = () => {
     const [page, setPage] = useState(0)
+    const [searchQuery, setSearchQuery] = useState('');
     const { error, loading, data } = useQuery(LOAD_CONTACT_LIST, {
         variables: {
             limit: PAGE_SIZE,
@@ -64,6 +71,10 @@ const ContactListPage = () => {
                 fav={true}
             />
             <h2>Contact List</h2>
+            <InputContainer>
+                <input type="text" placeholder='Search name' onChange={(e) =>
+                    setSearchQuery(e.target.value)} />
+            </InputContainer>
             {/* <ContactList /> */}
             <ListWrapper>
                 {
@@ -76,7 +87,7 @@ const ContactListPage = () => {
                 }
                 {
                     data &&
-                    data.contact.map((items: any) => {
+                    SearchFilter(data.contact, searchQuery).map((items: any) => {
                         return <CardContact key={items.id}
                             removeContact={() => DeleteContactFromList(items.id)}
                             _id={items.id}
@@ -87,9 +98,13 @@ const ContactListPage = () => {
                 }
             </ListWrapper>
             <PaginationWrapper>
-                <PaginateButton disabled={!page} onClick={() => setPage((prev) => prev - 1)}><IoIosArrowBack size={20} /></PaginateButton>
+                <PaginateButton disabled={!page} onClick={() => setPage((prev) => prev - 1)}>
+                    <IoIosArrowBack size={20} />
+                </PaginateButton>
                 <div> {page + 1}</div>
-                <PaginateButton onClick={() => setPage((prev) => prev + 1)}><IoIosArrowForward size={20} /></PaginateButton>
+                <PaginateButton onClick={() => setPage((prev) => prev + 1)}>
+                    <IoIosArrowForward size={20} />
+                </PaginateButton>
             </PaginationWrapper>
         </div>
     )

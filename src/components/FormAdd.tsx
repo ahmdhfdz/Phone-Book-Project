@@ -1,9 +1,10 @@
 import { useState } from "react"
-import { useMutation } from "@apollo/client";
-import { CREATE_CONTACT } from "../GraphQL/Mutations/CreateNewContact";
 import styled from '@emotion/styled'
-import { IoIosAddCircle, IoIosRemoveCircle } from 'react-icons/io'
+import { CREATE_CONTACT } from "../GraphQL/Mutations/CreateNewContact";
 import { LOAD_CONTACT_LIST } from "../GraphQL/Queries/GetContactList";
+import { useMutation } from "@apollo/client";
+import { validateInput } from "../helper/SpecialCharFilter";
+import { IoIosAddCircle, IoIosRemoveCircle } from 'react-icons/io'
 
 const FormAddContact = styled.form` 
     text-align: center;
@@ -91,12 +92,6 @@ const FormAdd = () => {
         setPhone(newItems);
     }
 
-    const validateInput = (value: string) => {
-        //eslint-disable-next-line
-        let specialChar = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-        return specialChar.test(value)
-    }
-
     const SetFirstName = (value: string) => {
         if (validateInput(value)) {
             setErrorFirst(true);
@@ -114,7 +109,6 @@ const FormAdd = () => {
             setLastName(value);
         }
     }
-
 
     return (
         <FormAddContact onSubmit={e => {
