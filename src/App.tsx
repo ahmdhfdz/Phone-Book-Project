@@ -14,6 +14,11 @@ const App: React.FunctionComponent = () => {
         body{
           background-color: #efcb48;
         }
+        @font-face {
+          font-family: 'Montserrat', sans-serif;
+          font-family: 'Noto Sans', sans-serif;
+          font-family: 'Silkscreen', cursive;
+        }
         `
       } />
       <Header />
