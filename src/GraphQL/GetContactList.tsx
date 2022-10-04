@@ -1,6 +1,6 @@
-import { useQuery, gql } from "@apollo/client";
+import { gql } from "@apollo/client";
 
-const LOAD_CONTACT_LIST = gql`
+export const LOAD_CONTACT_LIST = gql`
 query GetContactList (
     $distinct_on: [contact_select_column!], 
     $limit: Int, 
@@ -28,17 +28,17 @@ query GetContactList (
 //limit: $limit
 //offset: $offset
 
-export const useContactList = (limit:number, offset:number) => {
-  const {error, data, loading} = useQuery(LOAD_CONTACT_LIST, {
-      variables: {
-          limit,
-          offset,
-      }
-  })
+// export const useContactList = (limit:number, offset:number) => {
+//   const {error, data, loading} = useQuery(LOAD_CONTACT_LIST, {
+//       variables: {
+//           limit,
+//           offset,
+//       }
+//   })
   
-  return {
-      error,
-      data,
-      loading
-  }
-}
+//   return {
+//       error,
+//       data,
+//       loading
+//   }
+// }

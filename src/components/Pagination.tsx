@@ -34,7 +34,8 @@ const Pagination = ({ postsPerPage, totalPosts }: PageOption) => {
                 {
                     pageNumber.map((number) => (
                         <ListItems key={number}>
-                            <PaginationNumber href="!#">
+                            <PaginationNumber onClick={()=> console.log("Paginate")
+                            } href="!#">
                                 {number}
                             </PaginationNumber>
                         </ListItems>
