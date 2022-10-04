@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react'
 import { useContactList } from '../GraphQL/GetContactList'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
