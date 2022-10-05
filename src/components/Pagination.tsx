@@ -1,48 +1,34 @@
 import styled from '@emotion/styled'
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 
-interface PageOption {
-    postsPerPage: number;
-    totalPosts: number;
+interface Option {
+    page: number;
+    backFunction: () => void;
+    forwardFunction: () => void;
 }
 
-const ListItems = styled.li`
-    list-style: none;
-`
-
-const ListPagination = styled.ul`
+const PaginationWrapper = styled.div`
     display: flex;
+    justify-content: center;
+`;
+
+const PaginateButton = styled.button`
+    border-style: none;
+    background: none;
+    cursor: pointer;
 `
 
-const PaginationNumber = styled.a`
-    text-decoration: none;
-    color: black;
-    font-size: 20px;
-    font-weight: bold;
-    margin: 5px;
-`
-
-const Pagination = ({ postsPerPage, totalPosts }: PageOption) => {
-    const pageNumber = [];
-
-    for (let index = 1; index <= Math.ceil(totalPosts / postsPerPage); index++) {
-        pageNumber.push(index);
-    }
-
+const Pagination = ({ page, backFunction, forwardFunction }: Option) => {
     return (
-        <div>
-            <ListPagination>
-                {
-                    pageNumber.map((number) => (
-                        <ListItems key={number}>
-                            <PaginationNumber onClick={()=> console.log("Paginate")
-                            } href="!#">
-                                {number}
-                            </PaginationNumber>
-                        </ListItems>
-                    ))
-                }
-            </ListPagination>
-        </div>
+        <PaginationWrapper>
+            <PaginateButton disabled={!page} onClick={backFunction}>
+                <IoIosArrowBack size={20} />
+            </PaginateButton>
+            <div> {page + 1}</div>
+            <PaginateButton onClick={forwardFunction}>
+                <IoIosArrowForward size={20} />
+            </PaginateButton>
+        </PaginationWrapper>
     )
 }
 

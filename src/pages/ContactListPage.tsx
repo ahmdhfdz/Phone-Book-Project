@@ -1,17 +1,14 @@
-import CardContact from '../components/CardContact'
+import CardContact, { DefaultCard } from '../components/CardContact'
 import styled from '@emotion/styled'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useMutation, useQuery } from '@apollo/client'
 import { DELETE_CONTACT } from '../GraphQL/Mutations/RemoveContact'
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { LOAD_CONTACT_LIST } from '../GraphQL/Queries/GetContactList'
 import { SearchFilter } from '../helper/SearchFilter'
-
-
-const PaginationWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-`;
+import Pagination from '../components/Pagination'
+import SearchContact from '../components/SearchContact'
+import { FavoriteContext } from '../hooks/FavoriteContext'
+import { Types } from '../hooks/contactReducer'
 
 const ListWrapper = styled.ul`
     padding: 0;
@@ -19,22 +16,37 @@ const ListWrapper = styled.ul`
     flex-wrap: wrap;
 `;
 
-const PaginateButton = styled.button`
-    border-style: none;
-    background: none;
-    cursor: pointer;
+const ContainerFav = styled.div`
+    max-width: 320px;
 `
 
-const InputContainer = styled.div`
-    display: flex;
-    justify-content: center;
-`
+interface Contact {
+    id: number;
+    first_name: string;
+    last_name: string;
+    phones: [{ number: string; }]
+}
 
 const PAGE_SIZE = 10;
 
 const ContactListPage = () => {
     const [page, setPage] = useState(0)
     const [searchQuery, setSearchQuery] = useState('');
+    // const context = useContext(AppContext)
+    // const { returnValue, Add, Delete } = context
+    const { state, dispatch } = useContext(FavoriteContext);
+
+    const AddToFavorite = (id: number, first_name: string, last_name: string) => {
+        dispatch({
+            type: Types.Add,
+            payload: {
+                id: id,
+                first_name: first_name,
+                last_name: last_name
+            }
+        })
+    }
+
     const { error, loading, data } = useQuery(LOAD_CONTACT_LIST, {
         variables: {
             limit: PAGE_SIZE,
@@ -62,24 +74,31 @@ const ContactListPage = () => {
     return (
         <div>
             <h2>Favorite</h2>
-            <CardContact
-                _id={0}
-                first_name='John'
-                last_name='Doe'
-                phone={[{ number: '0812381328' }]}
-                del={true}
-                fav={true}
-            />
+            <ContainerFav>
+                {state.products.length ?
+                    state.products.map(items => (
+                        <CardContact key={items.id}
+                            _id={items.id}
+                            first_name={items.first_name}
+                            last_name={items.last_name}
+                            phone={[{ number: '0812381328' }]}
+                            del={true}
+                            fav={true}
+                        />
+                    ))
+
+                    :
+                    <DefaultCard message={"Tap Or Click Bookmark Button On List"} />
+                }
+            </ContainerFav>
+
             <h2>Contact List</h2>
-            <InputContainer>
-                <input type="text" placeholder='Search name' onChange={(e) =>
-                    setSearchQuery(e.target.value)} />
-            </InputContainer>
-            {/* <ContactList /> */}
+            <SearchContact OnChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSearchQuery(e.target.value)} />
             <ListWrapper>
                 {
                     error &&
-                    <h1>no contacts found.</h1>
+                    <h1>Error loading contacts.</h1>
                 }
                 {
                     loading &&
@@ -87,9 +106,10 @@ const ContactListPage = () => {
                 }
                 {
                     data &&
-                    SearchFilter(data.contact, searchQuery).map((items: any) => {
+                    SearchFilter(data.contact, searchQuery).map((items: Contact) => {
                         return <CardContact key={items.id}
                             removeContact={() => DeleteContactFromList(items.id)}
+                            addFavorite={() => AddToFavorite(items.id, items.first_name, items.last_name)}
                             _id={items.id}
                             first_name={items.first_name}
                             last_name={items.last_name}
@@ -97,15 +117,10 @@ const ContactListPage = () => {
                     })
                 }
             </ListWrapper>
-            <PaginationWrapper>
-                <PaginateButton disabled={!page} onClick={() => setPage((prev) => prev - 1)}>
-                    <IoIosArrowBack size={20} />
-                </PaginateButton>
-                <div> {page + 1}</div>
-                <PaginateButton onClick={() => setPage((prev) => prev + 1)}>
-                    <IoIosArrowForward size={20} />
-                </PaginateButton>
-            </PaginationWrapper>
+            <Pagination
+                page={page}
+                backFunction={() => setPage((prev) => prev - 1)}
+                forwardFunction={() => setPage((prev) => prev + 1)} />
         </div>
     )
 }

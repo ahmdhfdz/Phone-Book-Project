@@ -3,9 +3,10 @@ import { Routes, Route } from "react-router-dom";
 import Header from './components/Header';
 import FormContactPage from './pages/FormContactPage';
 import ContactListPage from './pages/ContactListPage';
+import { AppProvider } from './hooks/FavoriteContext';
 
 
-const App: React.FunctionComponent = () => {
+const App: React.FC = () => {
   return (
     <div>
       <Global styles={
@@ -21,10 +22,13 @@ const App: React.FunctionComponent = () => {
         `
       } />
       <Header />
-      <Routes>
-        <Route path="/" element={<ContactListPage />} />
-        <Route path="/form-contact" element={<FormContactPage />} />
-      </Routes>
+      <AppProvider>
+        <Routes>
+          <Route path="/" element={<ContactListPage />} />
+          <Route path="/form-contact" element={<FormContactPage />} />
+        </Routes>
+      </AppProvider>
+
     </div>
   );
 }

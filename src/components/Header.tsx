@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import styled from '@emotion/styled'
 import { AiOutlineBars } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom'
@@ -34,11 +34,17 @@ const Bar = styled.div`
 
 const Link = styled.a`
   text-decoration: none;
-  color: #FFF;
+  color: ${white};
   font-size: 20px;
   font-weight: bold;
   margin: 5px;
   cursor: pointer;
+  :hover{
+    color: yellow;
+  }
+  :active{
+    color: gray;
+  }
 `
 
 function Header() {

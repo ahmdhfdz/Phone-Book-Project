@@ -82,10 +82,10 @@ const FormAdd = () => {
         setPhone((number) => number.filter((value, i) => i !== index))
     }
 
-    const handleArrayChange = (event: any, index: number) => {
+    const handleArrayChange = (value: string, index: number) => {
         const newItems = phone.map((item, i) => {
             if (index === i) {
-                return { ...item, number: event }
+                return { ...item, number: value }
             }
             return item;
         });
