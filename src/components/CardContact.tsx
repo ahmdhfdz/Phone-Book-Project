@@ -83,6 +83,7 @@ const CardContact: React.FC<Contacts> = ({ _id, first_name, last_name, phone, de
   const [editPhone, setEditPhone] = useState(false)
   const [edited_first_name, setFirstname] = useState('');
   const [edited_last_name, setLastName] = useState('');
+  // eslint-disable-next-line
   const [edited_phone, setEditedPhone] = useState('');
   const [showPhones, setShowPhones] = useState(false);
   const [mutateFunction] = useMutation(EDIT_CONTACT, {
