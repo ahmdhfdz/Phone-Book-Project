@@ -11,11 +11,11 @@ type Contact = {
 };
 
 type InitialStateType = {
-  products: Contact[];
+  contacts: Contact[];
 };
 
 const initialState = {
-  products: [],
+  contacts: [],
 };
 
 const FavoriteContext = createContext<{
@@ -27,10 +27,10 @@ const FavoriteContext = createContext<{
 });
 
 const mainReducer = (
-  { products }: InitialStateType,
+  { contacts }: InitialStateType,
   action: ProductActions 
 ) => ({
-  products: contactReducer(products, action)
+  contacts: contactReducer(contacts, action)
 });
 
 type Props = {

@@ -20,6 +20,10 @@ const ContainerFav = styled.div`
     max-width: 320px;
 `
 
+const TitleStyle = styled.h2`
+    margin: 7vh 0 0 2vh;
+`
+
 interface Contact {
     id: number;
     first_name: string;
@@ -73,10 +77,10 @@ const ContactListPage = () => {
 
     return (
         <div>
-            <h2>Favorite</h2>
+            <TitleStyle>Favorite</TitleStyle>
             <ContainerFav>
-                {state.products.length ?
-                    state.products.map(items => (
+                {state.contacts.length ?
+                    state.contacts.map(items => (
                         <CardContact key={items.id}
                             _id={items.id}
                             first_name={items.first_name}
@@ -92,7 +96,7 @@ const ContactListPage = () => {
                 }
             </ContainerFav>
 
-            <h2>Contact List</h2>
+            <TitleStyle>Contact List</TitleStyle>
             <SearchContact OnChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setSearchQuery(e.target.value)} />
             <ListWrapper>

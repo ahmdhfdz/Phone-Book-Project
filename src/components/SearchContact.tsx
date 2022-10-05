@@ -10,10 +10,18 @@ const SearchContainer = styled.div`
     justify-content: center;
 `
 
+const SearchBar = styled.input`
+    width: 200px;
+    height: 30px;
+    border-radius: 10px;
+    outline: none;
+    border-color: black;
+`
+
 const SearchContact: React.FC<Option> = ({OnChange}) => {
   return (
     <SearchContainer>
-      <input type="text" placeholder='Search name' onChange={OnChange} />
+      <SearchBar type="text" placeholder='Search name' onChange={OnChange} />
     </SearchContainer>
   )
 }
